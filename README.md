@@ -1,46 +1,74 @@
-# Getting Started with Create React App
+# Storybook
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## What is it?
+* Storybook is an open source tool for building UI components and pages in isolation. 
 
-In the project directory, you can run:
+## Why Storybook?
+* Documentation directly located where is being used. Documentation without easy access tend to be old and therefore confusing.
+* Improves development process: Helps designers, product owners & developers stay in sync.
+    * Hexadecimal colors can be found directly.
+    * Layout: Margins and padding sizes are also accessible.
+    * Component behavior can be simulated (Input Events): Click, Focus, Hover, etc.
+* UI Components are easier to implement since they are independently defined from the application!
+  * No need to look for the component in the application
+  * Props are no hardcoded
+  * Functionality can be documented
+* Can be used for fast prototyping without having to start the application. 
+* Isolated manual testing from the context there are being used. (No login simulation required)
 
-### `npm start`
+## What do you need to do?
+* npx sb init
+* npm run storybook
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Stories
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+* have .story.tsx file extension in order to be added to the Storybook
+* have
+  * default export
+  * ComponentStory(template)
+  * Template binds per props alternative
 
-### `npm test`
+* Example: 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+```
+// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+export default {
+  title: 'Example/Button',
+  component: Button,
+  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
+  argTypes: {
+    backgroundColor: { control: 'color' },
+  },
+} as ComponentMeta<typeof Button>;
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
+const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+export const Primary = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+Primary.args = {
+  primary: true,
+  label: 'Button',
+};
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export const Secondary = Template.bind({});
+Secondary.args = {
+  label: 'Button',
+};
 
-### `npm run eject`
+export const Large = Template.bind({});
+Large.args = {
+  size: 'large',
+  label: 'Button',
+};
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+export const Small = Template.bind({});
+Small.args = {
+  size: 'small',
+  label: 'Button',
+};
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
